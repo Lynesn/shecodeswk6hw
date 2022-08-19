@@ -1,4 +1,5 @@
 function formatedDate(date) {
+  // let dateIndex = date.getDate();
   let hours = date.getHours();
   if (hours < 10) {
     hours = `0${hours}`;
@@ -21,34 +22,31 @@ function formatedDate(date) {
   ];
   let day = days[dayIndex];
 
-  return `${day} ${hours}:${minutes}`;
+  return `${day}, ${hours}:${minutes}`;
 }
 
-function cityDefualtTemp(response) {
-  document.querySelector("#city").innerHTML = response.data.name;
-  document.querySelector("#temp").innerHTML = Math.round(response.data.main.temp);
+// function showCurrentWeather(response) {
+//   document.querySelector("#temp").innerHTML = Math.round(response.data.main.temp);
+//   document.querySelector("#city").innerHTML = response.data.name;
+//   document.querySelector("#description").innerHTML = response.data.weather[0].main;
+//   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
+//   document.querySelector("#wind").innerHTML = Math.round(response.data.wind.speed);
+//   console.log(response.data);
+// }
 
-  document.querySelector("#humidity").innerHTML = `${Math.round(response.data.main.humidity)}`;
-  document.querySelector("#wind").innerHTML = `${Math.round(response.data.wind.speed)}`;
-  console.log(response.data);
-}
-
-function showDefaultCity(city){
+function searchCity(city){
   let apiKey = "d1c7e1c9752650fe2421481d738c5614";
   let apiUrl = `https://api.openweathermap.org.data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(cityDefualtTemp);
+  axios.get(apiUrl).then(showTemperature);
 }
 
-function myLocation(event) {
+function handleSubmit(event) {
   event.preventDefault();
-  let cityElement = document.querySelector("#city");
-
-  let cityInput = document.querySelector("#city-input");
-  cityElement.innerHTML = cityInput.value;
-
-  let apiKey = "d1c7e1c9752650fe2421481d738c5614";
-  let apiUrl = `https://api.openweathermap.org.data/2.5/weather?q=${cityInput.value}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(showTemperature);
+  let city = document.querySelector("#city-input").value;
+  searchCity(city);
+  // let apiKey = "d1c7e1c9752650fe2421481d738c5614";
+  // let apiUrl = `https://api.openweathermap.org.data/2.5/weather?q=${cityInput.value}&appid=${apiKey}&units=metric`;
+  // axios.get(apiUrl).then(showTemperature);
 }
 
 function showTemperature(response) {
@@ -72,6 +70,7 @@ function showCurrentWeather(response) {
   let currentTemp = Math.round(response.data.main.temp);
   let currentHumidity = Math.round(response.data.main.humidity);
   let currentWind = Math.round(response.data.wind.speed);
+  document.querySelector("#description").innerHTML = response.data.weather[0].main;
 
   let displayCity = document.querySelector("#city");
   displayCity.innerHTML = `${currentLocationCity}`;
@@ -87,53 +86,49 @@ function showCurrentWeather(response) {
 }
 
 function showCurrentLocation(position) {
-  let lat = position.coords.latitude;
-  let lon = position.coords.longitude;
-
   let apiKey = "d1c7e1c9752650fe2421481d738c5614";
-  let apiUrl = `https://api.openweathermap.org.data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+  let apiUrl = `https://api.openweathermap.org.data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
+  console.log(apiUrl);
   axios.get(apiUrl).then(showCurrentWeather);
 }
 
-function getCurrentLocation(event) {
+// Calling location function
+function getCurrentPosition(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(showCurrentLocation);
 }
 
-// Bonus Feature
 function toCels(event) {
   event.preventDefault();
 
   let tempE = document.querySelector("#temp");
-  let temperature = tempE.innerHTML;
-  temperature = Number(temperature);
-  tempE.innerHTML = Math.round(((temperature - 32) * 5) / 9);
+  tempE = 19;
 }
 
 function toFah(event) {
   event.preventDefault();
   let tempE = document.querySelector("#temp");
-  let temperature = tempE.innerHTML;
-  temperature = Number(temperature);
-  tempE.innerHTML = Math.round((temperature * 9) / 5 + 32);
+  tempE.innerHTML = 66;
 }
 
-
+// Calling function Current Date
 let dateElement = document.querySelector("#changes");
 let now = new Date();
 
 dateElement.innerHTML = formatedDate(now);
 
-let searchForm = document.querySelector("#search_form");
-searchForm.addEventListener("submit", myLocation);
+// Calling search function
+let searchForm = document.querySelector("#search-form");
+searchForm.addEventListener("submit", handleSubmit);
 
-let currentLocationButton = document.querySelector("#current-button");
-currentLocationButton.addEventListener("click", getCurrentLocation);
-
+// Calling temperature functions
 let celLink = document.querySelector("#cel-link");
 celLink.addEventListener("click", toCels);
 
 let fahLink = document.querySelector("#fah-link");
 fahLink.addEventListener("click", toFah);
 
-showDefaultCity("Germany");
+let currentLocationButton = document.querySelector("#current-button");
+currentLocationButton.addEventListener("click", getCurrentPosition);
+
+searchCity("Paris");
