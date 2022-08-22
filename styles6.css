@@ -1,41 +1,40 @@
 body {
     padding-bottom: 20px;
     text-align: center;
-    font-family: arial, sans-serif;
 }
+
 .container {
     text-align: center;
     border: #6547d1 solid 2px;
     border-radius: 10px;
     padding: 5px;
     margin-top: 20px;
-    background-image: url('images/this2.jpg');
+    background-image: url("images/this2.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
 }
+
 h1 {
     color: rgb(197, 24, 47);
-    font-weight: bolder;
+    font-weight: bold;
     text-align: center;
-    padding: 30px 20px 20px 20px;
-    display: block;
 }
 
 h2 {
     text-align: left;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 20px;
     line-height: 28px;
     margin: 0;
     padding-left: 20px;
 }
- /* ul {
+
+ul {
     margin: 0 0 10px;
     padding: 0;
-} */
+}
 
- li {
+li {
     font-size: 16px;
     font-weight: 400;
     height: 19px;
@@ -43,13 +42,14 @@ h2 {
     list-style: none;
     text-align: left;
 }
-.current-button {
-    display: block;
+
+.btn {
     margin: 0 auto;
-    background: red;
+    background: blue;
     color: #fff;
-    padding: 10px 20px;
+    padding: 5px 10px;
 }
+
 .card {
     border: #8d6fe0 transparent 1px;
     border-radius: 20px;
@@ -59,35 +59,44 @@ h2 {
             rgb(192, 180, 18) 100%);
     box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
 }
+
 .search-form {
     margin-bottom: 20px;
 }
+
 .card-header {
     font-style: italic;
     text-align: center;
     font-weight: bold;
 }
 
-.temperature {
+.temp {
     color: rgb(33, 33, 33);
-    font-size: 64px;
+    font-size: 50px;
     font-weight: 400;
     line-height: 1;
 }
 
-.weather-icon {
-    height: 64px;
-    width: 64px;
-    margin-right: 10px;
+.description {
+    display: block;
     text-align: left;
+    color: #ffffff;
+    text-transform: capitalize;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+
+    padding-left: 20px;
 }
+
 .units {
+    font-size: 15px;
     position: relative;
-    top: -34px;
+    top: -25px;
 }
 
 .code {
-    text-align: center;
+    text-align: right;
     padding-top: 30px;
     padding-bottom: 20px;
     font-weight: bold;
